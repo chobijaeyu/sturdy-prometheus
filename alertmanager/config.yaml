@@ -1,0 +1,13 @@
+route:
+  receiver: 'chatwork'
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+
+receivers:
+  - name: 'chatwork'
+    webhook_configs:
+    - send_resolved: true
+      http_config:
+        follow_redirects: true
+      url: 'http://prometheus-chatwork:8001/prometheus-chatwork'

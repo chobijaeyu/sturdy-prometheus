@@ -1,0 +1,30 @@
+groups:
+- name: some_server_local_dev
+  rules:
+  - alert: instance_down
+    expr: up == 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      title:  "[title]サーバーダウン（重要）[/title]"
+      summary: "Instance {{ $labels.instance }} down"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+  - alert: Low free space
+    expr: (node_filesystem_free{mountpoint !~ "/mnt.*"} / node_filesystem_size{mountpoint !~ "/mnt.*"} * 100) < 15
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      title:  "[title]サーバーストレージロー（警報）[/title]"
+      summary: Low free space on {{ $labels.instance }}
+      description: On {{ $labels.instance }} device {{ $labels.device }} mounted on {{ $labels.mountpoint }} has low free space of {{ $value }}%
+  - alert: HostOutOfMemory
+    expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      title:  "[title]サーバーアウトオブメモリ（警報）[/title]"
+      summary: Host out of memory (instance {{ $labels.instance }})
+      description: "Node memory is filling up (< 10% left)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
