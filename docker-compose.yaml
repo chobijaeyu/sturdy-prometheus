@@ -33,3 +33,6 @@ services:
   prometheus-chatwork:
     build: .
     container_name: prometheus-chatwork
+    environment:
+      - chatwork_roomID: '${chatwork_roomID}'
+      - chatwork_token: '${chatwork_token}'
