@@ -58,7 +58,7 @@ type prometheusMessage struct {
 }
 
 func main() {
-	receiveMessage()
+	prothemusToChatwork()
 }
 
 func getMessage(w http.ResponseWriter, r *http.Request) {
@@ -77,7 +77,7 @@ func getMessage(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func receiveMessage() {
+func prothemusToChatwork() {
 
 	http.HandleFunc("/prometheus-chatwork", getMessage)
 
